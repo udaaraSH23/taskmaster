@@ -1,40 +1,17 @@
-import { useState } from "react";
-import { TaskItem } from "../Components/TaskItem.tsx";
-import { Navbar } from "../Components/Navbar.tsx";
-import { ProgressBar } from "../Components/ProgressBar.tsx";
+import { useTasks } from "../Context/TaskContext";
+import { TaskItem } from "../Components/TaskItem";
+import { Navbar } from "../Components/Navbar";
+import { ProgressBar } from "../Components/ProgressBar";
 
-export interface Task {
-  id: number;
-  text: string;
-  completed: boolean;
-}
+
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, text: "Buy groceries", completed: true },
-    { id: 2, text: "Finish React project", completed: false },
-    { id: 3, text: "Review pull requests", completed: false },
-  ]);
+  const { tasks } = useTasks();
 
-  const handleToggle = (id: number) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
-
-  const handleDelete = (id: number) => {
-    setTasks((prev) => prev.filter((task) => task.id !== id));
-  };
-
-  const handleEdit = (id: number, newText: string) => {
-    setTasks((prev) =>
-      prev.map((task) => (task.id === id ? { ...task, text: newText } : task))
-    );
-  };
-
-  const completedCount = tasks.filter((t) => t.completed).length;
+  const todayTasks = tasks.filter((t) =>
+    t.createdAt?.startsWith(new Date().toISOString().split("T")[0])
+  );
+  const completedCount = todayTasks.filter((t) => t.completed).length;
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
@@ -42,19 +19,13 @@ export default function Home() {
       <div className="max-w-2xl mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Today's Tasks</h1>
         <div className="space-y-3">
-          {tasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              onToggle={handleToggle}
-              onDelete={handleDelete}
-              onEdit={handleEdit}
-            />
+          {todayTasks.map((task) => (
+            <TaskItem key={task.id} task={task} />
+
           ))}
         </div>
-
         <div className="mt-6">
-          <ProgressBar completed={completedCount} total={tasks.length} />
+          <ProgressBar completed={completedCount} total={todayTasks.length} />
         </div>
       </div>
     </div>
