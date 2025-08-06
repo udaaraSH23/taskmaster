@@ -1,14 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ThemeToggle } from './ThemeToggle';
 
-export const Navbar = () => {
-  const [darkMode, setDarkMode] = useState(false);
+export const Navbar: React.FC = () => {
   const navigate = useNavigate();
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark");
-  };
 
   return (
     <nav className="flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-md">
@@ -22,12 +17,7 @@ export const Navbar = () => {
         >
           ➕ Add Task
         </button>
-        <button
-          onClick={toggleDarkMode}
-          className="text-gray-600 dark:text-white text-xl"
-        >
-          🌙
-        </button>
+        <ThemeToggle />
         <button
           onClick={() => navigate("/progress")}
           className="text-gray-600 dark:text-white text-xl"

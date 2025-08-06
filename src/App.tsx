@@ -3,9 +3,11 @@ import './App.css'
 import Home from "./pages/Home";
 import AddTask from "./pages/AddTask";
 import { TaskProvider } from "./Context/TaskContext";
+import { ThemeProvider } from "./Context/ThemeContext";
 
 function App() {
   return (
+    <ThemeProvider>
     <TaskProvider>
     <Router>
       <Routes>
@@ -14,6 +16,7 @@ function App() {
       </Routes>
     </Router>
     </TaskProvider>
+    </ThemeProvider>
   );
 }
 
