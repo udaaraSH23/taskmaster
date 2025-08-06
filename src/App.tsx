@@ -5,10 +5,12 @@ import AddTask from "./pages/AddTask";
 import { TaskProvider } from "./Context/TaskContext";
 import { ThemeProvider } from "./Context/ThemeContext";
 
+
 function App() {
   return (
     <ThemeProvider>
     <TaskProvider>
+
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
