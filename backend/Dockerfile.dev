@@ -1,0 +1,15 @@
+FROM node:18
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+# Install dev tools like ts-node-dev globally
+RUN npm install -g ts-node-dev
+
+EXPOSE 5000
+
+CMD ["ts-node-dev", "--respawn", "--transpile-only", "src/server.ts"]
