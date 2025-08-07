@@ -8,6 +8,11 @@ import {
 
 const router = Router();
 
+router.get('/test', (req, res) => {
+  res.send('Task route is working');
+});
+
+
 router.get('/today', getTodayTasks);
 router.post('/', createTask);
 router.put('/:id', updateTask);

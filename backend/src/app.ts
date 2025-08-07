@@ -1,18 +1,22 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-// import taskRoutes from './routes/task.routes';
+import taskRoutes from './routes/task.routes';
 // import progressRoutes from './routes/progress.routes';
 
 dotenv.config();
 
 const app = express();
 
+
 app.use(cors());
 app.use(express.json());
 
+app.get('/test', (req, res) => {
+    res.status(200).json({ message: 'Server is up and running!' });
+  });
 // Routes
-// app.use('/tasks', taskRoutes);
+app.use('/tasks', taskRoutes);
 // app.use('/progress', progressRoutes);
 
 export default app;
